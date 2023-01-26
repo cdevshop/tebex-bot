@@ -1,0 +1,16 @@
+{
+	"PREFIX": "t.",
+	"GUILD_ID": "",
+	"BOT_ID": "",
+	"DEVELOPERS": [
+		""
+	],
+	"tebex": {
+		"couponperms": [
+			""
+		],
+		"giftcardperms": [
+			""
+		]
+	}
+}
