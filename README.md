@@ -1,22 +1,22 @@
 helo. tutorial video (coming soon)
 
-# how 2 deployyy:
+# how 2 deploy:
 ## linux
 1. download node.js first :thumbsup:
 2. install it of course
-3. open terminal and type npm --version just to make sure that npm is installed, you can use yarn or pnpm too, idk you choose :smiley:
+3. open terminal and type `npm --version` just to make sure that npm is installed, you can use yarn or pnpm too :smiley:
 4. now download this project
 5. unzip it
 6. enter the directory
 7. go to terminal and change directory to the bot directory using cd command
 8. type `npm install` if you are using npm, `pnpm install` for pnpm, for yarn user... duckduckgo it
-9. open .env
+9. open .env file
 10. paste your bot token and tebex secret
 11. open config.json inside src/storage directory
 12. change guild id with your server id
 13. change bot id with your bot id
-14. change the developers ids with your id, you can add more id if you trust your friend
-15. paste users id for `couponperms` and `giftcardperms`, paste their ids if you trust them
+14. change the developers ids with your id, you can add more id if you TRUST your friend
+15. paste users id for `couponperms` and `giftcardperms`, paste their ids if you TRUST them
 16. invite your bot to your discord server
 17. open terminal, type node init.js and wait
 18. after that, type `npm start` to start the bot
