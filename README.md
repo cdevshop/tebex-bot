@@ -10,7 +10,7 @@ helo. tutorial video (coming soon)
 6. enter the directory
 7. go to terminal and change directory to the bot directory using cd command
 8. type `npm install` if you are using npm, `pnpm install` for pnpm, for yarn user... duckduckgo it
-9. open .env file
+9. open .env file or create
 10. paste your bot token and tebex secret
 11. open config.json inside src/storage directory
 12. change guild id with your server id
