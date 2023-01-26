@@ -54,6 +54,6 @@ you are sensitive
 ### no typescript?
 no
 
-# known issue
+# known issues
 1. cannot void a gift card via API
 2. payments pagination doesn't work (i tried few times)
