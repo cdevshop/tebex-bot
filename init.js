@@ -178,7 +178,7 @@ require("dotenv").config();
 		),
 
 		new SlashCommandBuilder().setName('listing')
-		.setDescription("Get the categories and packages")
+		.setDescription("Get the categories and packages"),
 
 		new SlashCommandBuilder().setName('lookup')
 		.setDescription("Lookup information")
