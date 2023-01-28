@@ -3,7 +3,7 @@ const fetch = require("node-fetch");
 const moment = require("moment");
 
 exports.run = async(bot, interaction, color, prefix, config) => {
-	if(interaction.user.id !== interaction.guild.ownerId) return;
+	if(!config.tebex.lookupperms.includes(interaction.user.id)) return;
 	await interaction.deferReply();
 
 	const method = { method: "GET", headers: { 'X-Tebex-Secret': process.env.TEBEX_SECRET } };
