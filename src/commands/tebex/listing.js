@@ -10,7 +10,7 @@ exports.run = async(bot, interaction, color, prefix, config) => {
 	const getList = await fetch("https://plugin.tebex.io/listing", method);
 
 	let data = await getList.json();
-	if(data.error_code) return await interaction.editReply(`${info.error_code } | ${info.error_message}`);
+	if(data.error_code) return await interaction.editReply(`${data.error_code } | ${data.error_message}`);
 	if(!data || !data.categories.length) return await interaction.editReply("No data :skull:");
 
 	const currency = await bot.util.getCurrency();
