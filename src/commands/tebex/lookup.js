@@ -1,6 +1,23 @@
 const { EmbedBuilder } = require("discord.js");
 const fetch = require("node-fetch");
 const moment = require("moment");
+const fs = require("fs");
+
+function checkTebexTransactionID(transactionID) {
+	let rawdata = fs.readFileSync("src/storage/claim.json");
+	let data = JSON.parse(rawdata);
+	let found = false;
+  	for (let i = 0; i < data.length; i++) {
+    		if (data[i].TransactionID === transactionID) {
+      			found = data[i];
+      			break;
+    		} else {
+      			found = false;
+    		}
+  	}
+
+  	return found;
+}
 
 exports.run = async(bot, interaction, color, prefix, config) => {
 	if(!config.tebex.lookupperms.includes(interaction.user.id)) return;
@@ -43,6 +60,8 @@ exports.run = async(bot, interaction, color, prefix, config) => {
 		for(var i of info.packages) {
 			packages.push(`\`${i.quantity} ${i.name}\``);
 		};
+		
+		let isClaimed = checkTebexTransactionID(tid);
 
 		const embed = new EmbedBuilder()
 		.setColor(color.info)
@@ -57,7 +76,8 @@ exports.run = async(bot, interaction, color, prefix, config) => {
 			{ name: "Creator Code", value: info.creator_code ?? "None D:", inline: true },
 			{ name: "Email", value: `||${info.email}||`, inline: true },
 			{ name: "Player", value: `${info.player.name}`, inline: true },
-			{ name: "Packages", value: packages.join(", "), inline: true }
+			{ name: "Packages", value: packages.join(", "), inline: true },
+			{ name: "Claimed By", value: isClaimed ? `<@${isClaimed.DiscordID}>` : "Not Claimed", inline: true }
 		]);
 		return await interaction.editReply({ embeds: [embed] });
 	};
