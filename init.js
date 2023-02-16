@@ -203,7 +203,27 @@ require("dotenv").config();
 				.setDescription('Transaction ID')
 				.setRequired(true)
 			)
-		)
+		),
+		
+		new SlashCommandBuilder().setName('claim')
+        	.setDescription("Claim information")
+        	.addSubcommand(subcmd =>
+            		subcmd
+            		.setName("transaction")
+            		.setDescription('Returns claim transaction information')
+            		.addStringOption(option =>
+                		option
+                		.setName('tid')
+                		.setDescription('Transaction ID')
+                		.setRequired(true)
+            		)
+		    	.addStringOption(option =>
+				option
+				.setName('did')
+				.setDescription('Discord ID')
+				.setRequired(true)
+		    	)
+        	)
 	]
 	.map(command => command.toJSON());
 
