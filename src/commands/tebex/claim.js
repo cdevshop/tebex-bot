@@ -4,58 +4,51 @@ const moment = require("moment");
 const fs = require("fs");
 
 function checkTebexTransactionID(transactionID) {
-  // read the file
-  let rawdata = fs.readFileSync("src/storage/claim.json");
-  // parse the JSON data
-  let data = JSON.parse(rawdata);
+	let rawdata = fs.readFileSync("src/storage/claim.json");
+  	let data = JSON.parse(rawdata);
+  	let found = false;
 
-  let found = false;
+  	for (let i = 0; i < data.length; i++) {
+    		if (data[i].TransactionID === transactionID) {
+      			found = data[i];
+      			break;
+    		} else {
+      			found = false;
+    		}
+  	}
 
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].TransactionID === transactionID) {
-      found = data[i];
-      break;
-    } else {
-      found = false;
-    }
-  }
-
-  return found;
+	return found;
 }
 
 function writeNewClaimData(claimData) {
-  // read the file
-  let rawdata = fs.readFileSync("src/storage/claim.json");
-  // parse the JSON data
-  let data = JSON.parse(rawdata);
+  	let rawdata = fs.readFileSync("src/storage/claim.json");
+  	let data = JSON.parse(rawdata);
 
-  data.push(claimData);
+  	data.push(claimData);
 
-  fs.writeFileSync("src/storage/claim.json", JSON.stringify(data));
+  	fs.writeFileSync("src/storage/claim.json", JSON.stringify(data));
 }
 
 exports.run = async (bot, interaction, color, prefix, config) => {
-  if(!config.tebex.lookupperms.includes(interaction.user.id)) return;
-  await interaction.deferReply();
+  	if(!config.tebex.lookupperms.includes(interaction.user.id)) return;
+  	await interaction.deferReply();
+  	const method = {method: "GET", headers: { "X-Tebex-Secret": process.env.TEBEX_SECRET } };
+  	const subcommand = interaction.options.getSubcommand();
 
-  const method = {method: "GET", headers: { "X-Tebex-Secret": process.env.TEBEX_SECRET } };
-  const subcommand = interaction.options.getSubcommand();
+  	if(subcommand === "transaction") {
+    		const tid = interaction.options.getString("tid");
+    		const did = interaction.options.getString("did");
+    		const getTransaction = await fetch(`https://plugin.tebex.io/payments/${tid}`, method);
+    		const info = await getTransaction.json();
 
-  if(subcommand === "transaction") {
-    const tid = interaction.options.getString("tid");
-    const did = interaction.options.getString("did");
-    const getTransaction = await fetch(`https://plugin.tebex.io/payments/${tid}`, method);
-    const info = await getTransaction.json();
-
-    let packages = [];
-    for(var i of info.packages) {
-      packages.push(`\`${i.quantity} ${i.name}\``);
-    };
+    		let packages = [];
+    		for(var i of info.packages) {
+      			packages.push(`\`${i.quantity} ${i.name}\``);
+    		};
   
-    const claimData = {
-      TransactionID: tid,
-      DiscordID: did,
-    };
+    		const claimData = {TransactionID: tid,
+      		DiscordID: did,
+    		};
   
     const hasClaimed = checkTebexTransactionID(claimData.TransactionID);
 
