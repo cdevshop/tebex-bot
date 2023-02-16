@@ -46,32 +46,29 @@ exports.run = async (bot, interaction, color, prefix, config) => {
       			packages.push(`\`${i.quantity} ${i.name}\``);
     		};
   
-    		const claimData = {TransactionID: tid,
-      		DiscordID: did,
+    		const claimData = {
+			TransactionID: tid,
+      			DiscordID: did,
     		};
   
-    const hasClaimed = checkTebexTransactionID(claimData.TransactionID);
+    		const hasClaimed = checkTebexTransactionID(claimData.TransactionID);
 
-    let embed = new EmbedBuilder();
+    		let embed = new EmbedBuilder();
 
-    if (hasClaimed === false) {
-      embed
-        .setColor(color.success)
-        .setAuthor({ name: tid })
-        .setDescription(
-          `Claimed ${claimData.DiscordID} to the Transaction ID.`
-        );
-
-      writeNewClaimData(claimData);
-    } else {
-      embed
-        .setColor(color.error)
-        .setAuthor({ name: tid })
-        .setDescription(`Transaction ID has already been claimed.`);
-    }
-
-    return await interaction.editReply({ embeds: [embed] });
-  }
+    		if (hasClaimed === false) {
+      			embed
+        		.setColor(color.success)
+        		.setAuthor({ name: tid })
+        		.setDescription(`Claimed ${claimData.DiscordID} to the Transaction ID.`);
+      			writeNewClaimData(claimData);
+    		} else {
+      			embed
+        		.setColor(color.error)
+        		.setAuthor({ name: tid })
+        		.setDescription(`Transaction ID has already been claimed.`);
+    		}
+    		return await interaction.editReply({ embeds: [embed] });
+  	}
 };
 
 exports.conf = {
