@@ -56,6 +56,14 @@ exports.run = async(bot, interaction, color, prefix, config) => {
 		const getTransaction = await fetch(`https://plugin.tebex.io/payments/${tid}`, method);
 		const info = await getTransaction.json();
 
+		if (info.packages === null || info.packages === undefined) {
+			const errorEmbed = new EmbedBuilder()
+			.setColor(color.error)
+			.setAuthor({ name: tid})
+			.setDescription(`The Transaction ID entered above does not exist`);
+			return await interaction.editReply({ embeds: [errorEmbed] });
+		};
+
 		let packages = [];
 		for(var i of info.packages) {
 			packages.push(`\`${i.quantity} ${i.name}\``);
